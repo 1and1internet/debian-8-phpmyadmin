@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "$EUID" -eq 0 ]; then
+    echo "This will not run as root - please run as a non privileged user"
+    exit 1
+    # Although doing something like below should allow this to run a root,
+    #  it is instead recommended to run the entire container as a non privileged user.
+    PHP_VERSION=`cat /etc/PHP_VERSION`
+    sed -i -r -e 's/^;user/user/' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
+    sed -i -r -e 's/^;group/group/' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
+    sed -i -r -e 's/^;listen.owner/listen.owner/' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
+    sed -i -r -e 's/^;listen.group/listen.group/' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
+    sed -i -r -e 's/^#user /user /' /etc/nginx/nginx.conf
+fi
