@@ -35,11 +35,11 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 		/var/www/html/examples /var/www/html/test /var/www/html/po /var/www/html/js/jquery/src \
 		/var/www/html/composer.json \
 	&& mkdir -p /var/run/php /var/lib/nginx /var/lib/php \
-	&& chmod -R 777 /var/run /var/log /var/lib/nginx /var/lib/php /etc/nginx /etc/php \
 	&& chmod -R 755 /init /hooks \
 	&& find /var/www -type d -exec chmod 777 {} \; \
 	&& find /var/www -type f -exec chmod 666 {} \; \
 	&& nginx -t \
+	&& chmod -R 777 /var/run /var/log /var/lib/nginx /var/lib/php /etc/nginx /etc/php \
 	&& rm -rf /var/log/nginx/error.log /var/run/nginx.pid \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
